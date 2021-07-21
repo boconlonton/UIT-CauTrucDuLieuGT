@@ -104,11 +104,22 @@ int TinhGiaTriDaThuc(DaThuc da_thuc, int x){
 }
 
 // 3d. Cong, tru, nhan 2 da thuc
-// DaThuc CongDaThuc(DaThuc A, DaThuc B)
-// {    
-//     DaThuc kq;
-//     SapXepDaThuc(A);
-//     SapXepDaThuc(B);
-//     kq.so_don_thuc = A.so_don_thuc + B.so_don_thuc;
-
-// }
+DaThuc CongDaThuc(DaThuc A, DaThuc B)
+{    
+    DaThuc kq;
+    SapXepDaThuc(A);
+    SapXepDaThuc(B);
+    kq.so_don_thuc = A.so_don_thuc + B.so_don_thuc;
+    if (A.bac > B.bac)
+    {
+        kq.bac = A.bac;
+    }
+    else
+    {
+        kq.bac = B.bac;
+    }
+    for (int i=kq.bac; i<0; i++)
+    {
+        
+    }
+}
