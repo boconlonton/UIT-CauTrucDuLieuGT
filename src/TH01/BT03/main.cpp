@@ -26,7 +26,7 @@ int main()
                 NhapDaThuc(dt);
                 XuatDaThuc(dt);
                 SapXepDaThuc(dt);
-                cout << "Bac cua da thuc: " << dt.A[0].somu << endl;
+                cout << "Bac cua da thuc: " << dt.bac << endl;
                 XuatDaThuc(dt);
                 break;   
             }

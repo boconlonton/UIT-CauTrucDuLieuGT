@@ -15,12 +15,13 @@ struct DaThuc{
 };
 
 // 3a. Nhap/Xuat da thuc
-DonThuc NhapDonThuc(DonThuc so_hang){
+DonThuc NhapDonThuc(){
+    DonThuc ket_qua;
     cout << "\tNhap he so: ";
-    cin >> so_hang.heso;
+    cin >> ket_qua.heso;
     cout << "\tNhap so mu: ";
-    cin >> so_hang.somu;
-    return so_hang;
+    cin >> ket_qua.somu;
+    return ket_qua;
 }
 
 void XuatDonThuc(DonThuc so_hang){
@@ -29,13 +30,27 @@ void XuatDonThuc(DonThuc so_hang){
 
 void NhapDaThuc(DaThuc &da_thuc){
     int so_don_thuc;
+    int so_phan_tu_trung;
+    so_phan_tu_trung = 0;
     cout << "Nhap so luong don thuc: ";
     cin >> da_thuc.so_don_thuc;
     for (int i = 0; i < da_thuc.so_don_thuc; i++){
         DonThuc temp;
         cout << "So hang thu " << i + 1 << ": " << endl;
-        da_thuc.A[i] = NhapDonThuc(temp);
+        temp = NhapDonThuc();
+        // Kiem tra cac don thuc da nhap
+        for (int j=0; j<i; j++){
+            // Neu so mu da co, thay doi so hang
+            if (da_thuc.A[j].somu == temp.somu)
+            {
+                da_thuc.A[j].heso += temp.heso;
+                so_phan_tu_trung++;
+                break;
+            }
+        }
+        da_thuc.A[i] = temp;
     }
+    da_thuc.so_don_thuc -= so_phan_tu_trung;
 }
 
 void XuatDaThuc(DaThuc da_thuc){
@@ -62,6 +77,7 @@ void SapXepDaThuc(DaThuc &da_thuc){
             }
         }    
     }
+    da_thuc.bac = da_thuc.A[0].somu;
 }
 
 // 3c. Tinh gia tri da thuc
@@ -88,7 +104,11 @@ int TinhGiaTriDaThuc(DaThuc da_thuc, int x){
 }
 
 // 3d. Cong, tru, nhan 2 da thuc
-DaThuc CongDaThuc(DaThuc A, DaThuc B){
-    DaThuc kq;
-    
-}
+// DaThuc CongDaThuc(DaThuc A, DaThuc B)
+// {    
+//     DaThuc kq;
+//     SapXepDaThuc(A);
+//     SapXepDaThuc(B);
+//     kq.so_don_thuc = A.so_don_thuc + B.so_don_thuc;
+
+// }
