@@ -88,4 +88,7 @@ int TinhGiaTriDaThuc(DaThuc da_thuc, int x){
 }
 
 // 3d. Cong, tru, nhan 2 da thuc
-
+DaThuc CongDaThuc(DaThuc A, DaThuc B){
+    DaThuc kq;
+    
+}

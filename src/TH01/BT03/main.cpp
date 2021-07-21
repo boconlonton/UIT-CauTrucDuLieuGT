@@ -42,6 +42,17 @@ int main()
                 cout << "=> P(" << x << ")" << "= " << gia_tri << endl;
                 break;
             }
+            case 4:
+            {
+                DaThuc temp[10];
+                for (int i=0; i<2; i++){
+                    cout << "Nhap da thuc thu " << i + 1 << ":" << endl;
+                    NhapDaThuc(temp[i]);
+                    XuatDaThuc(temp[i]);
+                    cout << endl;
+                }
+                break;
+            }
         }
         cout << endl;        
         cout << "Tiep tuc ? (y/n) ";
