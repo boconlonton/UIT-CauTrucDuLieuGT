@@ -183,7 +183,7 @@ DaThuc TruDaThuc(DaThuc A, DaThuc B)
             // Neu so mu da co, thay do he so
             if (kq.A[j].somu == temp.somu)
             {
-                kq.A[j].somu -= temp.heso;
+                kq.A[j].heso -= temp.heso;
                 so_phan_tu_trung++;
                 flag = 0;
                 break;
@@ -197,6 +197,54 @@ DaThuc TruDaThuc(DaThuc A, DaThuc B)
         }
     }
     kq.so_don_thuc -= so_phan_tu_trung;
+    SapXepDaThuc(kq);
+    return kq;
+}
+
+DaThuc NhanDaThuc(DaThuc A, DaThuc B)
+{    
+    DaThuc kq;
+    DonThuc temp;
+    int vi_tri_dung;
+    int so_phan_tu_trung;
+    int flag;
+    vi_tri_dung = 0;
+    kq.so_don_thuc = A.so_don_thuc * B.so_don_thuc;
+    for (int i=0; i<A.so_don_thuc; i++)
+    {
+        temp = A.A[i];
+        for (int j=0; j<B.so_don_thuc; j++)
+        {
+            temp.heso = A.A[i].heso * B.A[j].heso;
+            temp.somu = A.A[i].somu + B.A[j].somu;
+            kq.A[vi_tri_dung] = temp;
+            vi_tri_dung++;
+        }
+    }
+    vi_tri_dung = 0;
+    for (int k=0; k<kq.so_don_thuc; k++)
+    {
+        flag = 1;
+        temp = kq.A[k];
+        // Kiem tra cac don thuc da nhap
+        for (int j=0; j<vi_tri_dung; j++){
+            // Neu so mu da co, thay do he so
+            if (kq.A[j].somu == temp.somu)
+            {
+                kq.A[j].heso += temp.heso;
+                so_phan_tu_trung++;
+                flag = 0;
+                break;
+            }
+
+        }
+        if (flag)
+        {
+            kq.A[vi_tri_dung] = temp;
+            vi_tri_dung++;
+        }
+    }
+    kq.so_don_thuc = vi_tri_dung;
     SapXepDaThuc(kq);
     return kq;
 }
