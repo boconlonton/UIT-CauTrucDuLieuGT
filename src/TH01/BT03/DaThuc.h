@@ -29,26 +29,35 @@ void XuatDonThuc(DonThuc so_hang){
 }
 
 void NhapDaThuc(DaThuc &da_thuc){
+    DonThuc temp;
     int so_don_thuc;
     int so_phan_tu_trung;
+    int vi_tri_dung = 0;
+    int flag;
     so_phan_tu_trung = 0;
     cout << "Nhap so luong don thuc: ";
     cin >> da_thuc.so_don_thuc;
+
     for (int i = 0; i < da_thuc.so_don_thuc; i++){
-        DonThuc temp;
+        flag = 1;
         cout << "So hang thu " << i + 1 << ": " << endl;
         temp = NhapDonThuc();
         // Kiem tra cac don thuc da nhap
-        for (int j=0; j<i; j++){
+        for (int j=0; j<vi_tri_dung; j++){
             // Neu so mu da co, thay doi so hang
             if (da_thuc.A[j].somu == temp.somu)
             {
                 da_thuc.A[j].heso += temp.heso;
                 so_phan_tu_trung++;
+                flag = 0;
                 break;
             }
         }
-        da_thuc.A[i] = temp;
+        if (flag)
+        {
+            da_thuc.A[vi_tri_dung] = temp;
+            vi_tri_dung++;
+        }
     }
     da_thuc.so_don_thuc -= so_phan_tu_trung;
 }
@@ -107,19 +116,87 @@ int TinhGiaTriDaThuc(DaThuc da_thuc, int x){
 DaThuc CongDaThuc(DaThuc A, DaThuc B)
 {    
     DaThuc kq;
+    DonThuc temp;
+    int vi_tri_dung;
+    int so_phan_tu_trung;
+    int flag;
     SapXepDaThuc(A);
     SapXepDaThuc(B);
+    vi_tri_dung = 0;
     kq.so_don_thuc = A.so_don_thuc + B.so_don_thuc;
-    if (A.bac > B.bac)
+    for (int i=0; i<A.so_don_thuc; i++)
     {
-        kq.bac = A.bac;
+        kq.A[i] = A.A[i];
+        vi_tri_dung++;
     }
-    else
+    so_phan_tu_trung = 0;
+    for (int i=0; i<B.so_don_thuc; i++)
     {
-        kq.bac = B.bac;
+        flag = 1;
+        temp = B.A[i];
+        // Kiem tra cac don thuc da nhap
+        for (int j=0; j<vi_tri_dung; j++){
+            // Neu so mu da co, thay do he so
+            if (kq.A[j].somu == temp.somu)
+            {
+                kq.A[j].heso += temp.heso;
+                so_phan_tu_trung++;
+                flag = 0;
+                break;
+            }
+
+        }
+        if (flag)
+        {
+            kq.A[vi_tri_dung] = temp;
+            vi_tri_dung++;
+        }
     }
-    for (int i=kq.bac; i<0; i++)
+    kq.so_don_thuc -= so_phan_tu_trung;
+    SapXepDaThuc(kq);
+    return kq;
+}
+
+DaThuc TruDaThuc(DaThuc A, DaThuc B)
+{    
+    DaThuc kq;
+    DonThuc temp;
+    int vi_tri_dung;
+    int so_phan_tu_trung;
+    int flag;
+    SapXepDaThuc(A);
+    SapXepDaThuc(B);
+    vi_tri_dung = 0;
+    kq.so_don_thuc = A.so_don_thuc + B.so_don_thuc;
+    for (int i=0; i<A.so_don_thuc; i++)
     {
-        
+        kq.A[i] = A.A[i];
+        vi_tri_dung++;
     }
+    so_phan_tu_trung = 0;
+    for (int i=0; i<B.so_don_thuc; i++)
+    {
+        flag = 1;
+        temp = B.A[i];
+        // Kiem tra cac don thuc da nhap
+        for (int j=0; j<vi_tri_dung; j++){
+            // Neu so mu da co, thay do he so
+            if (kq.A[j].somu == temp.somu)
+            {
+                kq.A[j].somu -= temp.heso;
+                so_phan_tu_trung++;
+                flag = 0;
+                break;
+            }
+
+        }
+        if (flag)
+        {
+            kq.A[vi_tri_dung] = temp;
+            vi_tri_dung++;
+        }
+    }
+    kq.so_don_thuc -= so_phan_tu_trung;
+    SapXepDaThuc(kq);
+    return kq;
 }

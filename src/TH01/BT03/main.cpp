@@ -6,8 +6,13 @@ using namespace std;
 int main()
 {
     DaThuc dt;
+    DaThuc temp[10];
+    DaThuc kq;
     string control;
     int flag;
+    int flag_3d;
+    int x;
+    int gia_tri;
     while (true)
     {
         cout << "(1) Nhap/Xuat da thuc\n(2) Xac dinh bac cua da thuc\n(3) Tinh gia tri da thuc\n(4) Cong, tru, nhan, da thuc\n";
@@ -34,8 +39,7 @@ int main()
             {
                 NhapDaThuc(dt);
                 XuatDaThuc(dt);
-                int x;
-                int gia_tri;
+
                 cout << "Tinh gia tri cua don thuc tai x = ";
                 cin >> x;
                 gia_tri = TinhGiaTriDaThuc(dt, x);
@@ -44,13 +48,34 @@ int main()
             }
             case 4:
             {
-                DaThuc temp[10];
+                
                 for (int i=0; i<2; i++){
                     cout << "Nhap da thuc thu " << i + 1 << ":" << endl;
                     NhapDaThuc(temp[i]);
                     XuatDaThuc(temp[i]);
                     cout << endl;
                 }
+                cout << "(1) Cong; (2) Tru; (3) Nhan" << endl;
+                cout << "Nhap lua chon (1->3): ";
+                cin >> flag_3d;
+                switch (flag_3d)
+                {
+                case 1:
+                    kq = CongDaThuc(temp[0], temp[1]);
+                    cout << "P1(x) + P2(x) = ";
+                    XuatDaThuc(kq);
+                    break;
+                
+                case 2:
+                    kq = TruDaThuc(temp[0], temp[1]);
+                    cout << "P1(x) + P2(x) = ";
+                    XuatDaThuc(kq);
+                    break;
+                
+                case 3:
+                    break;
+                }
+
                 break;
             }
         }
