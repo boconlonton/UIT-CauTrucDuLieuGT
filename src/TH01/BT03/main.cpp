@@ -73,6 +73,10 @@ int main()
                     break;
                 
                 case 3:
+                    kq = NhanDaThuc(temp[0], temp[1]);
+                    cout << "P1(x) * P2(x) = ";
+                    XuatDaThuc(kq);
+                    break;
                     break;
                 }
 
