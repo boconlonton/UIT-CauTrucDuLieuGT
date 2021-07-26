@@ -29,8 +29,9 @@ int main()
             case 2:
             {
                 NhapDaThuc(dt);
-                XuatDaThuc(dt);
+                // XuatDaThuc(dt);
                 SapXepDaThuc(dt);
+                cout << endl;
                 cout << "Bac cua da thuc: " << dt.bac << endl;
                 XuatDaThuc(dt);
                 break;   
@@ -39,7 +40,7 @@ int main()
             {
                 NhapDaThuc(dt);
                 XuatDaThuc(dt);
-
+                cout << endl;
                 cout << "Tinh gia tri cua don thuc tai x = ";
                 cin >> x;
                 gia_tri = TinhGiaTriDaThuc(dt, x);
