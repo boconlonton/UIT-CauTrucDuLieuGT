@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <string>
 
 using namespace std;
 
@@ -30,22 +31,22 @@ void Init(LIST &L)
 }
 
 // Tao NODE
-NODE* CreateNode() {
+NODE* CreateNode(Sinhvien data) {
     NODE* p;
-    Sinhvien data;
     p = new NODE;
-    if (p == NULL)
-        cout << "Het bo nho.";
-        return NULL;
+    // if (p == NULL)
+    //     cout << "Het bo nho.";
+    //     return NULL;
     p->info = data;
     p->pNext = NULL;
     return p;
 }
 
+// Add NODE vao dau LIST
 void AddHead(LIST &L, NODE* p){
     if (L.pHead == NULL) {
         L.pHead = p;
-        L.pTail = L.pHead;
+        L.pTail = p;
     }
     else
     {
@@ -53,21 +54,37 @@ void AddHead(LIST &L, NODE* p){
         L.pHead = p;
     }
 }
-// Nhap danh sach sinh vien
+
+// 2.2 Nhap danh sach sinh vien
 void NhapDS(LIST &L)
 {
     Init(L);
-    do
+    while (true)
     {
-        NODE* p = CreateNode();
+        Sinhvien data;
         cout << "Ho ten: ";
-        cin >> p->info.ten;
-        cin.ignore();
+        getline(cin, data.ten);
+        if (data.ten.length() == 0)
+            break;
         cout << "MSSV: ";
-        cin.ignore();
-        cin >> p->info.mssv;
+        getline(cin, data.mssv);
         cout << "Diem TB: ";
-        cin >> p->info.dtb;
-        AddHead(L, p);
-    } while (L.pHead->info.ten != "");
+        cin >> data.dtb;
+        cin.ignore();
+        NODE* p; 
+        p = CreateNode(data);
+        AddHead(L,p);
+    }
+}
+
+// 2.3. Tim sinh vien
+bool TimSinhVienByMSSV(LIST &L, string mssv){
+    NODE* p;
+    p = L.pHead;
+    while (p != NULL){
+        if (p->info.mssv == mssv)
+            return true;
+        p = p->pNext;
+    }
+    return false;
 }
