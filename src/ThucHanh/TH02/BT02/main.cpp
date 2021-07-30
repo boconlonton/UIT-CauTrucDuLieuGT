@@ -7,10 +7,15 @@ using namespace std;
 
 int main()
 {
-    LIST DanhSachSV;
+    LIST danhSachSV;
+    LIST danhSachSV_copied;
+    NODE* p; 
+    Sinhvien data;
     string mssv_search;
-    int control;
-    
+    string control_program;
+    int control_function;
+    NhapDS(danhSachSV);
+    XuatDS(danhSachSV);
     while (true)
     {
         cout << "(3) Tim sinh vien (theo MSSV)." << endl;
@@ -19,44 +24,91 @@ int main()
         cout << "(6) Xep loai va in ra thong tin sinh vien." << endl;
         cout << "(7) Sap xep va in ra danh sach theo DTB." << endl;
         cout << "(8) Chen 1 SV vao danh sach." << endl;
-        switch (control)
+        cout << "Chon tu 3 -> 8: ";
+        cin >> control_function;
+        switch (control_function)
         {
         case 3:
             // 2.3. Tim Sinh vien
+            cout << "Nhap MSSV: ";
+            cin.ignore();
+            getline(cin, mssv_search);
+            p = TimSinhVienByMSSV(danhSachSV, mssv_search);
+            if (p != NULL)
+            {
+                cout << "(" << p->info.ten << ", "; 
+                cout << p->info.mssv << ", ";
+                cout << p->info.dtb << ")" << endl;
+            }
+            else
+            {
+                cout << "Khong ton tai." << endl;
+            }
             break;
         
         case 4:
-            /* code */
+            // 2.4. Xoa sinh vien dua tren mssv
+            danhSachSV_copied = danhSachSV;
+            cout << "Nhap MSSV: ";
+            cin.ignore();
+            getline(cin, mssv_search);
+            p = TimNODEBeforeMSSV(danhSachSV_copied, mssv_search);
+            if (p != NULL)
+            {
+                
+                cout << "Here";
+                RemoveAfterQ(danhSachSV_copied, p);
+                XuatDS(danhSachSV_copied);
+            }
+            else
+            {
+                cout << "Khong ton tai." << endl;
+            }
             break;
         
         case 5:
-            /* code */
+            ListSVgreaterThan5(danhSachSV);
             break;
         
         case 6:
-            /* code */
+            danhSachSV_copied = danhSachSV;
+            XepLoaiVaList(danhSachSV_copied);
             break;
         
         case 7:
-            /* code */
+            danhSachSV_copied = danhSachSV;
+            SapXepTheoDTB(danhSachSV_copied);
+            XuatDS(danhSachSV_copied);
             break;
         
         case 8:
-            /* code */
+            cin.ignore();
+            danhSachSV_copied = danhSachSV;
+            SapXepTheoDTB(danhSachSV_copied);
+            cout << "Ho ten: ";
+            getline(cin, data.ten);
+            cout << "MSSV: ";
+            cin.ignore();
+            getline(cin, data.mssv);
+            cout << "Diem TB: ";
+            cin >> data.dtb;
+            p = CreateNode(data);
+            AddHead(danhSachSV_copied, p);
+            SapXepTheoDTB(danhSachSV_copied);
+            XuatDS(danhSachSV_copied);
+            break;
+        
+        default:
             break;
         
         }
+        cout << "Tiep tuc (y/n) ? ";
+        cin >> control_program;
+        if (control_program == "n")
+        {
+            cout << "Cam on ban da su dung chuong trinh.";
+            break;
+        }
     }
-    // NhapDS(DanhSachSV);
-    // cout << "Nhap MSSV: ";
-    // getline(cin, mssv_search);
-    // if (TimSinhVienByMSSV(DanhSachSV, mssv_search))
-    // {
-    //     cout << "Ton tai.";
-    // }
-    // else
-    // {
-    //     cout << "Khong ton tai.";
-    // }
     return 1;
 }

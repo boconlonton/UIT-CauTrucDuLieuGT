@@ -33,6 +33,7 @@ NODE* CreateNode(int x) {
         return NULL;
     p->info = x;
     p->pNext = NULL;
+    cout << p->info;
     return p;
 }
 
