@@ -52,12 +52,8 @@ int main()
             cout << "Nhap MSSV: ";
             cin.ignore();
             getline(cin, mssv_search);
-            p = TimNODEBeforeMSSV(danhSachSV_copied, mssv_search);
-            if (p != NULL)
+            if (XoaMSSV(danhSachSV_copied, mssv_search))
             {
-                
-                cout << "Here";
-                RemoveAfterQ(danhSachSV_copied, p);
                 XuatDS(danhSachSV_copied);
             }
             else
@@ -93,8 +89,7 @@ int main()
             cout << "Diem TB: ";
             cin >> data.dtb;
             p = CreateNode(data);
-            AddHead(danhSachSV_copied, p);
-            SapXepTheoDTB(danhSachSV_copied);
+            ChenGiuNguyenThuTu(danhSachSV_copied, p);
             XuatDS(danhSachSV_copied);
             break;
         

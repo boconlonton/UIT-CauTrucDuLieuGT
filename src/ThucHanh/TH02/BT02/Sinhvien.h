@@ -78,19 +78,26 @@ void NhapDS(LIST &L)
 }
 
 // 2.2. In danh sach sinh vien
-bool XuatDS(LIST &L){
+void XuatDS(LIST &L){
     NODE* p;
     p = L.pHead;
     cout << "-----DANH SACH SINH VIEN-----" << endl;
     cout << "(Ho ten, MSSV, DTB)" << endl;
-    while (p != NULL){
-        cout << "(" << p->info.ten << ", "; 
-        cout << p->info.mssv << ", ";
-        cout << p->info.dtb << ")" << endl;
-        p = p->pNext;
+    if (p == NULL)
+    {
+        cout << "-----------------" << endl;
     }
-    cout << "-----------------" << endl;
-    return false;
+    else
+    {
+        while (p != NULL){
+            cout << "(" << p->info.ten << ", "; 
+            cout << p->info.mssv << ", ";
+            cout << p->info.dtb << ")" << endl;
+            p = p->pNext;
+        }
+        cout << "-----------------" << endl;
+    }
+    
 }
 
 // 2.3. Tim sinh vien
@@ -106,17 +113,17 @@ NODE* TimSinhVienByMSSV(LIST &L, string mssv){
 }
 
 // 2.4. Xoa sinh vien
-NODE* TimNODEBeforeMSSV(LIST &L, string mssv){
+bool RemoveHead(LIST &L){
     NODE* p;
-    p = L.pHead;
-    while (p != NULL){
-        if (p->pNext->info.mssv == mssv)
-            return p;
-        p = p->pNext;
+    if (L.pHead != NULL)
+    {
+        p = L.pHead;
+        L.pHead = p->pNext;
+        delete p;
+        return 1; // Remove head successfully
     }
-    return NULL;
+    return 0; // Empty list
 }
-
 
 bool RemoveAfterQ(LIST &L, NODE *Q)
 {
@@ -136,6 +143,28 @@ bool RemoveAfterQ(LIST &L, NODE *Q)
         return 1;
     }
     return 0;
+}
+
+bool XoaMSSV(LIST &L, string mssv){
+    NODE* p;
+    p = L.pHead;
+    if (p == NULL){
+        return false;
+    }
+    if (p->info.mssv == mssv)
+    {
+        RemoveHead(L);
+        return true;
+    }
+    while (p != NULL){
+        if (p->pNext->info.mssv == mssv)
+        {
+            RemoveAfterQ(L, p);
+            return true;
+        }
+        p = p->pNext;
+    }
+    return false;
 }
 
 // 2.5. Liet ke thong tin sinh vien co dtb >= 5
@@ -211,21 +240,69 @@ void XepLoaiVaList(LIST &L){
 void SapXepTheoDTB(LIST &L){
     NODE* p;
     NODE* q;
-    NODE* temp;
+    Sinhvien temp;
     p = L.pHead;
     while (p != NULL){
         q = p->pNext;
         while (q != NULL)
         {
-            if (q->info.dtb > p->info.dtb)
+            if (q->info.dtb < p->info.dtb)
             {
-                temp = p;
-                p = q;
-                q = temp;
+                temp = p->info;
+                p->info = q->info;
+                q->info = temp;
             }
-            q = p->pNext;    
+            q = q->pNext;    
         }
-
         p = p->pNext;
     }
+}
+
+// 2.8. Chen nhung giu nguyen thu tu
+void AddAfterQ(LIST &L, NODE* Q, NODE* p){
+    if (Q != NULL)
+    {
+        p->pNext = Q->pNext;
+        Q->pNext = p;
+        if (L.pTail == Q)
+        {
+            L.pTail = p;
+        }
+    }
+    else
+    {
+        AddHead(L, p); // Add p into the beginning of list since Q is NULL 
+    }
+}
+
+void AddTail(LIST &L, NODE* p){
+    if (L.pHead == NULL) {
+        L.pHead = p;
+        L.pTail = L.pHead;
+    }
+    else
+    {
+        L.pTail->pNext = p;
+        L.pTail = p;
+    }
+}
+
+void ChenGiuNguyenThuTu(LIST &L, NODE* p){
+    NODE* temp;
+    temp = L.pHead;
+    if (temp == NULL)
+    {
+        AddHead(L, p);
+        return;
+    }
+    while (temp != NULL){
+        if (temp->info.dtb < p->info.dtb)
+        {
+            AddAfterQ(L, temp, p);
+            return;
+        }
+        temp = temp->pNext;
+    }
+    AddTail(L, p);
+    return;
 }
