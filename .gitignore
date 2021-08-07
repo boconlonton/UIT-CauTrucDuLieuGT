@@ -36,6 +36,16 @@
 *.out
 *.app
 
+
+# Ignore all
+*
+
+# Unignore all with extensions
+!*.*
+
+# Unignore all dirs
+!*/
+
 ### VisualStudioCode ###
 .vscode/*
 !.vscode/settings.json
